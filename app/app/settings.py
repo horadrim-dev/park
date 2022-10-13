@@ -59,14 +59,6 @@ INSTALLED_APPS = [
     'djangocms_style',
     'light_gallery',
 
-    'aldryn_apphooks_config',
-    'parler',
-    'taggit',
-    'taggit_autosuggest',
-    'meta',
-    'sortedm2m',
-    'djangocms_blog',
-
     'core',
     'djangocms_slider',
     'colorfield',
@@ -75,6 +67,7 @@ INSTALLED_APPS = [
     'djangocms_animated_numbers',
     'background_section',
     'attractions',
+    'news',
 ]
 
 MIDDLEWARE = [
