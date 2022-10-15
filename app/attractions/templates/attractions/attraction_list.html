@@ -1,8 +1,14 @@
-{% extends 'attractions.base.html' %}
+{% extends 'attractions/base.html' %}
 {% load cms_tags sekizai_tags thumbnail static %}
 
 {% block attractions_content %}
 {% render_placeholder object.placeholder_top %}
+
+  {% if user.is_authenticated %}
+  <div class="row d-flex justify-content-end pb-4 pe-3">
+    {% render_model_add attraction_list.0 %}
+  </div>
+  {% endif %}
 
   <div class="row">
     {% for attraction in attraction_list %}

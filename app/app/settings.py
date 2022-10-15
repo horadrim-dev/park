@@ -58,6 +58,9 @@ INSTALLED_APPS = [
     'djangocms_snippet',
     'djangocms_style',
     'light_gallery',
+    'cmsplugin_yandexmap',
+    'djangocms_transfer',
+    'cmsplugin_contact_form',
 
     'core',
     'djangocms_slider',

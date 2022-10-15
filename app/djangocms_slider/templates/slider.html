@@ -1,4 +1,4 @@
-{% load static sekizai_tags %}
+{% load static sekizai_tags thumbnail %}
 
 {% addtoblock "css" %}<link rel="stylesheet" type="text/css" href="{% static 'djangocms_slider/css/owl.carousel.min.css' %}">{% endaddtoblock %}
 {% addtoblock "css" %}<link rel="stylesheet" type="text/css" href="{% static 'djangocms_slider/css/owl.theme.default.min.css' %}">{% endaddtoblock %}
@@ -34,7 +34,7 @@
 
 <div id="owl-slider-{{ id }}" class="owl-carousel">
     {% for slide in slides %}
-    <div class="slider-item" style="background-image:url({{slide.image.url}});">
+    <div class="slider-item" style="background-image:url({% thumbnail slide.image "1800x600" upscale crop %});">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">

@@ -3,9 +3,11 @@
 
 {% block app_content %}
 
+  {% if user.is_authenticated %}
   <div class="row d-flex justify-content-end pb-4 pe-3">
     {% render_model_add object_list.0 %}
   </div>
+  {% endif %}
 
   <div class="row pb-5">
     {% for obj in object_list %}

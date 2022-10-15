@@ -4,11 +4,11 @@ from django.views.generic import ListView, DetailView
 from .models import Attraction
 
 class AttractionListView(ListView):
-    template_name = 'attraction_list.html'
+    template_name = 'attractions/attraction_list.html'
     model = Attraction
 
 class AttractionDetailView(DetailView):
-    template_name = 'attraction_detail.html'
+    template_name = 'attractions/attraction_detail.html'
     model = Attraction
 
     def get_context_data(self, **kwargs):

@@ -8,7 +8,7 @@ from .models import AttractionsPlugin
 @plugin_pool.register_plugin
 class AttractionPlugin(CMSPluginBase):
     model = AttractionsPlugin
-    render_template = 'attractions_plugin.html'
+    render_template = 'attractions/attractions_plugin.html'
     name = "Блок с аттракционами"   
 
     def render(self, context, instance, placeholder):
