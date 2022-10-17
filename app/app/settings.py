@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'cms',
     'menus',
     'treebeard',
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'cmsplugin_yandexmap',
     'djangocms_transfer',
     'cmsplugin_contact_form',
+    # 'cmsplugin_contact',
 
     'core',
     'djangocms_slider',
@@ -88,6 +90,7 @@ MIDDLEWARE = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+
 ]
 
 ROOT_URLCONF = 'app.urls'

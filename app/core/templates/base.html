@@ -5,7 +5,9 @@
         <title>{% page_attribute "page_title" %}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
+
+		<link rel="shortcut icon" type="image/png" href="{% static 'core/images/icons/favicon.ico' %}"/>     
+
 		{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">{% endaddtoblock %}
 		{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'core/css/bootstrap-icons.css' %}">{% endaddtoblock %}
 		{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'core/css/animate.css' %}">{% endaddtoblock %}
@@ -24,15 +26,23 @@
 		{% addtoblock "js" %}<script src="{% static 'core/js/scrollax.min.js' %}"></script>{% endaddtoblock %}
 		{% addtoblock "js" %}<script src="{% static 'core/js/main.js' %}"></script>{% endaddtoblock %}
 
+		{% addtoblock "js" %}<script src="{% static 'core/js/accessibility.min.js' %}"></script>{% endaddtoblock %}
+
         {% render_block "css" %}
     </head>
     <body>
 
-        {% cms_toolbar %}
+		{% cms_toolbar %}
+
+		{% if request.user.is_authenticated %}
+			<div class="w-100" style="height:46px;"></div>
+		{% endif %}
+
 
 		<header>
 			{% static_placeholder 'header' %}
-			{% include 'core/menu.html' %}
+			{% comment %} <img id="specialButton" style="cursor:pointer;" src="https://lidrekon.ru/images/special.png" alt="ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ" title="ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ" /> {% endcomment %}
+			{% include 'core/navbar.html' %}
 		</header>
 
 
@@ -40,10 +50,11 @@
 			{% placeholder "content" %}
 		{% endblock content %}
 			
-		<footer class="ftco-footer ftco-bg-dark ftco-section">
+		<footer class="ftco-footer ftco-bg-dark ftco-section pb-0">
 			<div class="container">
 				{% static_placeholder 'footer' %}
-
+				
+				{% include 'core/footer.html' %}
 				<div class="row">
 				<div class="col-md-12 text-center">
 					<p>

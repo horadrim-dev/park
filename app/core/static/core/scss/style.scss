@@ -71,8 +71,10 @@ h1, h2, h3, h4, h5,
 
 .topper{
 	font-size: 15px;
-	width: 100%;
+	// width: 100%;
+	margin: 0 25px;
 	display: block;
+	white-space: nowrap !important;
 	@include media-breakpoint-down(sm){
 		margin-bottom: 10px;
 
@@ -1010,7 +1012,7 @@ textarea.form-control {
 }
 
 .bg-primary {
-	background: $primary!important;
+	background: #3566a8 !important;
 }
 
 
@@ -1046,8 +1048,8 @@ textarea.form-control {
 
 
 .ftco-footer {
-	font-size: 14px;
-	background: #232323;
+	font-size: 18px;
+	background: #3566a8;
 	padding: 6em 0;
 	.ftco-footer-widget {
 		width: 100%;
@@ -1202,7 +1204,7 @@ textarea.form-control {
 				transform: translate(-50%, -50%);
 			}
 			&:hover {
-				color: $white;
+				background: $cloudblue;
 			}
 		}
 	}
@@ -2006,4 +2008,13 @@ textarea.form-control {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px;
   }
+}
+
+#specialButton {
+	&:hover, &:focus {
+		color: #91bcff !important;
+	}
+}
+div.cms .cms-toolbar-item-logo a:before {
+	display: none;
 }

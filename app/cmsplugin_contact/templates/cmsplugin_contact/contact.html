@@ -1,0 +1,30 @@
+{% load i18n %}
+
+{% if form %}
+	<form action="." method="post">
+        {% for field in form %}
+            {% if field.name != 'accept_terms' %}
+                <p{% if field.errors %} class="error"{% endif %}>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <span class="error_msg">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </p>
+            {% endif %}
+        {% endfor %}
+		{% if form.accept_terms %}
+			{{ form.accept_terms }}
+		{% endif %}
+		<p>
+			<input type="submit"{% if contact.submit_text %} value="{{ contact.submit_text }}"{% endif %} />
+		</p>
+		
+		{% csrf_token %}
+	</form>
+
+{% else %}
+	{{ contact.thanks|safe }}
+{% endif %}
