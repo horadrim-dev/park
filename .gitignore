@@ -52,3 +52,6 @@
 venv/
 Kiddos/
 app/db.sqlite3
+app/app/settings.py
+app/media
+app/db_.sqlite3
