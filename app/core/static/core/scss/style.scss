@@ -227,12 +227,12 @@ h1, h2, h3, h4, h5,
 	}
 	
 	.navbar-toggler {
-		border: none;
-		color: $black !important;
+		// border: none;
+		// color: $black !important;
 		cursor: pointer;
-		padding-right: 0;
+		// padding-right: 0;
 		text-transform: uppercase;
-		font-size: 16px;
+		font-size: 24px;
 		letter-spacing: .1em;
 		&:focus{
 			outline: none !important;
