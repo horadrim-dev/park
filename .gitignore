@@ -48,6 +48,9 @@
 
 
 .pyc
+**/.pyc
+**/**/.pyc
+**/**/**/.pyc
 **/__pycache__/
 venv/
 Kiddos/
@@ -55,3 +58,15 @@ app/db.sqlite3
 app/app/settings.py
 app/media
 app/db_.sqlite3
+app/app/__pycache__
+app/attractions/__pycache__
+app/background_section/__pycache__
+app/cmsplugin_contact/__pycache__
+app/cmsplugin_contact_form/__pycache__
+app/cmsplugin_yandexmap/__pycache__
+app/core/__pycache__
+app/djangocms_animated_numbers/__pycache__
+app/djangocms_colorblocks/__pycache__
+app/djangocms_reviews/__pycache__
+app/djangocms_slider/__pycache__
+app/news/__pycache__
