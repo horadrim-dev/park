@@ -1033,6 +1033,9 @@ textarea.form-control {
 .ftco-section {
 	padding: 7em 0;
 	position: relative;
+	.container {
+		position: relative;
+	}
 }
 
 .ftco-no-pt{
@@ -1042,9 +1045,9 @@ textarea.form-control {
 	padding-bottom: 0;
 }
 
-.ftco-bg-dark {
-	background: #3c312e;
-}
+// .ftco-bg-dark {
+// 	background: #3c312e;
+// }
 
 
 .ftco-footer {

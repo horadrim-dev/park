@@ -9764,6 +9764,9 @@ textarea.form-control {
   padding: 7em 0;
   position: relative;
 }
+.ftco-section .container {
+  position: relative;
+}
 
 .ftco-no-pt {
   padding-top: 0;
@@ -9771,10 +9774,6 @@ textarea.form-control {
 
 .ftco-no-pb {
   padding-bottom: 0;
-}
-
-.ftco-bg-dark {
-  background: #3c312e;
 }
 
 .ftco-footer {
