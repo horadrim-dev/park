@@ -40,4 +40,5 @@ class YandexMap(CMSPlugin):
     
     def get_lat_lng(self):
         if self.lat and self.lng:
-            return [self.lat, self.lng]
+            return [float(self.lat), float(self.lng)]
+        return 'null'
