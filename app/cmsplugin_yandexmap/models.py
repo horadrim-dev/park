@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from cms.models import CMSPlugin
+from django.conf import settings
 
 class YandexMap(CMSPlugin):
     """
@@ -42,3 +43,6 @@ class YandexMap(CMSPlugin):
         if self.lat and self.lng:
             return [float(self.lat), float(self.lng)]
         return 'null'
+
+    def get_api_key(self):
+        return settings.YANDEX_MAPS_API_KEY 

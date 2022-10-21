@@ -1,6 +1,6 @@
 {% load i18n sekizai_tags %}
 
-    {% addtoblock "js" %}<script src="https://api-maps.yandex.ru/2.1/?apikey=f42ef678-48f5-4597-b2dd-0cb2ef491f60&lang=ru_RU" type="text/javascript"></script>{% endaddtoblock %}
+    {% addtoblock "js" %}<script src="https://api-maps.yandex.ru/2.1/?apikey={{ object.get_api_key }}&lang=ru_RU" type="text/javascript"></script>{% endaddtoblock %}
     {% addtoblock "js" %}
     <script type="text/javascript">
         (function () {
@@ -57,6 +57,5 @@
 {% endaddtoblock %}
 
 <div class="plugin_yandexmap">
-    <!--  ATTENTION: set a height for this div in CSS -->
     <div id="yandex-map-{{ object.id }}" class="yandex-map-container w-100" style="height: 400px"></div>
 </div>
