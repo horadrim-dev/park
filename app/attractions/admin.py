@@ -12,5 +12,6 @@ class ReviewAdmin(PlaceholderAdminMixin, admin.ModelAdmin):
     # prepopulated_fields = {
     #     "alias" : ("title",)
     # 
+    list_display = ['title', 'order']
     form = AttractionForm
     inlines = (PhotoAttractionInline, )
