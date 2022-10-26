@@ -5,15 +5,17 @@ from djangocms_text_ckeditor.fields import HTMLField
 from django.urls import reverse
 from cms.models.pluginmodel import CMSPlugin
 from cms.models.fields import PlaceholderField
+
+from core.models import OrderedModel
 import uuid
 
-class Attraction(models.Model):
+class Attraction(OrderedModel):
     title = models.CharField("Название", max_length=255, default="")
 
     price = models.PositiveIntegerField('Цена, руб/билет (взрослый)', default=0)
     price_kid = models.PositiveIntegerField('Цена, руб/билет (дети)', default=0)
     rental_time = models.FloatField('Время проката, в минутах', default=0, help_text="(0 = без ограничений)")
-    restrictions = models.CharField("Ограничения", max_length=1024, default="")
+    restrictions = models.CharField("Ограничения", max_length=1024, default="", blank=True, null=True)
     description = HTMLField("Описание", default="", blank=True, null=True)
 
     placeholder_top = PlaceholderField('top')
@@ -37,10 +39,20 @@ class Attraction(models.Model):
 
     def __str__(self):
         return self.title
-    
+
+    def save(self, lock_recursion=False, *args, **kwargs):
+
+        super().save(*args, **kwargs)
+
+        if not lock_recursion:
+            self.update_order(
+                list_of_objects = list(Attraction.objects.all().exclude(id=self.id))
+            )
+
     class Meta:
         verbose_name = 'аттракцион'
         verbose_name_plural = 'аттракционы'
+        ordering = ['order']
 
 class Photo(models.Model):
     attraction = models.ForeignKey(Attraction, on_delete=models.CASCADE)
