@@ -20,6 +20,6 @@
     {% endif %}
 </p>
 <p class="subheading">
-    <span>Время проката:</span> {% if attraction.rental_time %}{{ attraction.rental_time }} минут{% else %}не ограничено{% endif %}
+    <span>Время проката:</span> {% if attraction.rental_time %}{{ attraction.rental_time |floatformat }} минут(ы){% else %}не ограничено{% endif %}
 </p>
 <p><span><u>Ограничения:</u></span></p><p class="lh-sm"> {{ attraction.restrictions }}</p>
