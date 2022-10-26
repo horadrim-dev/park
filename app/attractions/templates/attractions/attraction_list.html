@@ -17,7 +17,7 @@
         {% render_model_block attraction %}
 
           {% spaceless %}
-          <div id="attraction-gallery-{{attraction.id}}" class="light-gallery-plugin img">
+          <div id="attraction-gallery-{{attraction.id}}" class="light-gallery-plugin img {% if not attraction.main_photo %}no-photo{% endif %}">
               <a href="{{ attraction.main_photo.url }}" class="d-block w-100">
                   {% comment %} <div class="img h-100" style="background-image: url({{attraction.main_photo.url}});"></div> {% endcomment %}
                   {% if attraction.main_photo %}
