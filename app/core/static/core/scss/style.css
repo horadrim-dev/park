@@ -9455,11 +9455,6 @@ h1, h2, h3, h4, h5,
 .catalog-item .text {
   width: calc(100% - 270px);
 }
-@media (max-width: 991.98px) {
-  .catalog-item .text {
-    width: 100%;
-  }
-}
 .catalog-item .text .subheading {
   color: #000000;
 }
@@ -9472,12 +9467,6 @@ h1, h2, h3, h4, h5,
 }
 .catalog-item .img {
   width: 270px;
-}
-@media (max-width: 991.98px) {
-  .catalog-item .img {
-    width: 100%;
-    height: 300px;
-  }
 }
 
 .staff {

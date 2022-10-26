@@ -10,10 +10,12 @@ import uuid
 class Attraction(models.Model):
     title = models.CharField("Название", max_length=255, default="")
 
-    price_card = models.PositiveIntegerField('Цена билета по карте', default=0)
-    price_nocard = models.PositiveIntegerField('Цена билета без карты', default=0)
-    short_description = models.CharField("Короткое описание", max_length=1024, default="")
+    price = models.PositiveIntegerField('Цена, руб/билет (взрослый)', default=0)
+    price_kid = models.PositiveIntegerField('Цена, руб/билет (дети)', default=0)
+    rental_time = models.FloatField('Время проката, в минутах', default=0, help_text="(0 = без ограничений)")
+    restrictions = models.CharField("Ограничения", max_length=1024, default="")
     description = HTMLField("Описание", default="", blank=True, null=True)
+
     placeholder_top = PlaceholderField('top')
     placeholder_bottom = PlaceholderField('bottom', related_name="placeholder_bottom")
 
