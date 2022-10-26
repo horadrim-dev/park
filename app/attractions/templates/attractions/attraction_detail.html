@@ -27,19 +27,8 @@
         {% render_model_block attraction %}
         <div class="text bg-light p-4 w-100">
           <h3>{{ attraction.title }}</h3>
-          <p class="subheading">
-            <span>Цена:</span> 
-              {% if attraction.price == attraction.price_kid %}
-                {{ attraction.price }} руб/билет
-              {% else %}
-                дети - {{attraction.price_kid}} руб./билет, взрослые - {{attraction.price}} руб./билет
-              {% endif %}
-          </p>
-
-          <p class="subheading">
-            <span>Время проката:</span> {% if attraction.rental_time %}{{ attraction.rental_time }} минут{% else %}не ограничено{% endif %}
-          </p>
-          <p><span><u>Ограничения:</u></span></p><p class="lh-sm"> {{ attraction.restrictions }}</p>
+          
+          {% include 'attractions/includes/attraction_properties.html' %}
 
           <p class="text-dark">{{ attraction.description|safe }}</p>
         </div>

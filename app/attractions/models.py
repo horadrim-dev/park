@@ -16,6 +16,8 @@ class Attraction(OrderedModel):
     price_kid = models.PositiveIntegerField('Цена, руб/билет (дети)', default=0)
     rental_time = models.FloatField('Время проката, в минутах', default=0, help_text="(0 = без ограничений)")
     restrictions = models.CharField("Ограничения", max_length=1024, default="", blank=True, null=True)
+    work_in_summer = models.BooleanField('Работает летом?', default=True)
+    work_in_winter = models.BooleanField('Работает зимой?', default=False)
     description = HTMLField("Описание", default="", blank=True, null=True)
 
     placeholder_top = PlaceholderField('top')
@@ -24,6 +26,7 @@ class Attraction(OrderedModel):
     main_photo = FilerImageField(
         verbose_name='Главное фото',
         on_delete=models.CASCADE, 
+        blank=True, null=True
     )
 
 
