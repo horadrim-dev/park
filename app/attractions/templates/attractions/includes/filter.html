@@ -1,0 +1,39 @@
+{% load sekizai_tags crispy_forms_tags %}
+
+<form action="" id="attraction-filter" method="get">
+    {% comment %} {{ filter.form }} {% endcomment %}
+    <div class="flex-grow row align-items-center gy-2">
+        <div class="col-12 col-xxl">
+            <div class="row align-items-center g-3">
+                <div class="col-8">
+                    {% comment %} {{ filter.form.category|as_crispy_field }} {% endcomment %}
+                    {% for choice in filter.form.category %}
+                        {{choice.tag}}
+                        <label class="btn btn-outline-primary" for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                    {% endfor %}
+                </div>
+                <div class="col">
+                    {{ filter.form.work_in_summer|as_crispy_field }}
+                        {% comment %} <div class="input-group-text">
+                        <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+                        </div> {% endcomment %}
+
+                </div>
+                <div class="col">
+                    {{ filter.form.work_in_winter|as_crispy_field }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="submit" value="=>" class="d-none" />
+</form>
+
+{% addtoblock "js" %}
+<script type="text/javascript">
+$( document ).ready(function() {
+    $('#attraction-filter input').on('change', function() {
+        $(this).closest("form").submit();
+    });
+});
+</script>
+{% endaddtoblock %}

@@ -4,14 +4,16 @@
 {% block attractions_content %}
 {% render_placeholder object.placeholder_top %}
 
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and object_list %}
   <div class="row d-flex justify-content-end pb-4 pe-3">
-    {% render_model_add attraction_list.0 %}
+    {% render_model_add object_list.0 %}
   </div>
   {% endif %}
 
-  <div class="row">
-    {% for attraction in attraction_list %}
+  {% include 'attractions/includes/filter.html' %}
+
+  <div class="row mt-3">
+    {% for attraction in object_list %}
       <div class="col-sm-12 col-lg-6 catalog-item d-flex ftco-animate">
 
         {% render_model_block attraction %}
@@ -108,9 +110,12 @@
             });
             </script>
             {% endaddtoblock %}
+    {% empty %}
+    <div class="alert alert-info" role="alert">
+      По заданным критериям фильтра ничего не найдено.
+    </div>
     {% endfor %}
   </div>
-
 
 
 {% endblock %}

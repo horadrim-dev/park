@@ -1,4 +1,5 @@
 from email.policy import default
+from tabnanny import verbose
 from django.db import models
 from filer.fields.image import FilerImageField
 from djangocms_text_ckeditor.fields import HTMLField
@@ -9,15 +10,27 @@ from cms.models.fields import PlaceholderField
 from core.models import OrderedModel
 import uuid
 
+
+class Category(models.Model):
+    title = models.CharField("Название", max_length=256)
+
+    def __str__(self):
+        return self.title
+
+
+    class Meta:
+        verbose_name = "категория"
+        verbose_name_plural = "категории"
+
 class Attraction(OrderedModel):
     title = models.CharField("Название", max_length=255, default="")
-
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
     price = models.PositiveIntegerField('Цена, руб/билет (взрослый)', default=0)
     price_kid = models.PositiveIntegerField('Цена, руб/билет (дети)', default=0)
     rental_time = models.FloatField('Время проката, в минутах', default=0, help_text="(0 = без ограничений)")
     restrictions = models.CharField("Ограничения", max_length=1024, default="", blank=True, null=True)
-    work_in_summer = models.BooleanField('Работает летом?', default=True)
-    work_in_winter = models.BooleanField('Работает зимой?', default=False)
+    work_in_summer = models.BooleanField('Летний сезон', default=True)
+    work_in_winter = models.BooleanField('Зимний сезон', default=False)
     description = HTMLField("Описание", default="", blank=True, null=True)
 
     placeholder_top = PlaceholderField('top')
