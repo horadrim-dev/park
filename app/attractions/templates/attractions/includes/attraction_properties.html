@@ -2,6 +2,7 @@
     {% if attraction.category %}
         <span class="border p-1">{{ attraction.category }}</span>
     {% endif %}
+
     <span class="border p-1 me-1">
     {% if attraction.season == 'summer' %}
         Летний сезон
@@ -23,7 +24,4 @@
 </p>
 {% if attraction.restrictions %}
 <p><span><u>Ограничения:</u></span></p><p class="lh-sm"> {{ attraction.restrictions }}</p>
-{% endif %}
-{% if attraction.category %}
-<small class="text-muted">{{ attraction.category }}</small>
 {% endif %}

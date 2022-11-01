@@ -65,7 +65,9 @@ class Attraction(OrderedModel):
 
         if not lock_recursion:
             self.update_order(
-                list_of_objects = list(Attraction.objects.all().exclude(id=self.id))
+                list_of_objects = list(
+                    Attraction.objects.filter(category=self.category, season=self.season).exclude(id=self.id)
+                    )
             )
 
     class Meta:

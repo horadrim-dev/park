@@ -14,7 +14,6 @@ class AttractionFilterSet(django_filters.FilterSet):
         )
     season = django_filters.filters.ChoiceFilter(
         choices=SEASON_CHOICES, 
-        # empty_label="<h1>XYU</h1>",
         empty_label='<i class="bi bi-funnel"></i>',
         widget=forms.RadioSelect(attrs={'class':'btn-check'})
         )

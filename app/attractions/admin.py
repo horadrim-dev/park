@@ -12,7 +12,8 @@ class AttractionsAdmin(PlaceholderAdminMixin, admin.ModelAdmin):
     # prepopulated_fields = {
     #     "alias" : ("title",)
     # 
-    list_display = ['title', 'order']
+    list_filter = ('category', 'season',)
+    list_display = ['title', 'category', 'season', 'order']
     form = AttractionForm
     inlines = (PhotoAttractionInline, )
 
