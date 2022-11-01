@@ -10,6 +10,10 @@ from cms.models.fields import PlaceholderField
 from core.models import OrderedModel
 import uuid
 
+SEASON_CHOICES = (
+    ('summer', 'Лето'),
+    ('winter', 'Зима'),
+)
 
 class Category(models.Model):
     title = models.CharField("Название", max_length=256)
@@ -29,8 +33,7 @@ class Attraction(OrderedModel):
     price_kid = models.PositiveIntegerField('Цена, руб/билет (дети)', default=0)
     rental_time = models.FloatField('Время проката, в минутах', default=0, help_text="(0 = без ограничений)")
     restrictions = models.CharField("Ограничения", max_length=1024, default="", blank=True, null=True)
-    work_in_summer = models.BooleanField('Летний сезон', default=True)
-    work_in_winter = models.BooleanField('Зимний сезон', default=False)
+    season = models.CharField('Сезон', max_length=16, choices=SEASON_CHOICES, default=SEASON_CHOICES[0][0])
     description = HTMLField("Описание", default="", blank=True, null=True)
 
     placeholder_top = PlaceholderField('top')

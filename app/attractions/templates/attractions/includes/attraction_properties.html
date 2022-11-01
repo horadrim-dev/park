@@ -1,12 +1,11 @@
 <p>
-    <span class="border p-2">
-    {% if attraction.work_in_summer and attraction.work_in_winter %}
-        Летом и зимой
-    {% elif not attraction.work_in_summer and not attraction.work_in_winter %}
-        Временно не работает
-    {% elif attraction.work_in_summer %}
+    {% if attraction.category %}
+        <span class="border p-1">{{ attraction.category }}</span>
+    {% endif %}
+    <span class="border p-1 me-1">
+    {% if attraction.season == 'summer' %}
         Летний сезон
-    {% elif attraction.work_in_winter %}
+    {% elif attraction.season == 'winter' %}
         Зимний сезон
     {% endif %}
     </span>
@@ -24,4 +23,7 @@
 </p>
 {% if attraction.restrictions %}
 <p><span><u>Ограничения:</u></span></p><p class="lh-sm"> {{ attraction.restrictions }}</p>
+{% endif %}
+{% if attraction.category %}
+<small class="text-muted">{{ attraction.category }}</small>
 {% endif %}
