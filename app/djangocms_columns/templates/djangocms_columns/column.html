@@ -1,0 +1,9 @@
+{% load cms_tags %}
+{% comment %} <div class="column" style="width: {{ instance.width }}; float: left;"> {% endcomment %}
+<div class="col d-flex ftco-animate fadeInUp {{ instance.classes }}">
+	<div class="d-flex w-100">
+		{% for plugin in instance.child_plugin_instances %}
+				{% render_plugin plugin %}
+		{% endfor %}
+	</div>
+</div>

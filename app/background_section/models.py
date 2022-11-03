@@ -27,6 +27,8 @@ class BackgroundSection(CMSPlugin):
         on_delete=models.CASCADE,
         blank=True, null=True
     )
+    thumb_width = models.PositiveSmallIntegerField("Ширина", default=0)
+    thumb_height = models.PositiveSmallIntegerField("Высота", default=0)
     background_color = ColorField(default='#FFFFFF', verbose_name="Фоновый цвет", help_text="Опция будет проигнорирована, если задано фоновое изображение",
         blank=True, null=True
     )
@@ -45,6 +47,9 @@ class BackgroundSection(CMSPlugin):
 
     def generate_id(self):
         return str(uuid.uuid4().fields[-1])[:7]
+
+    def get_width_height_thumb(self):
+        return "{}x{}".format(self.thumb_width, self.thumb_height)
 
     def __str__(self):
         return self.title if self.title else ''

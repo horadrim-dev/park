@@ -85,9 +85,18 @@ class Photo(models.Model):
 class AttractionsPlugin(CMSPlugin):
 
     num_objects = models.PositiveIntegerField("Количество аттракционов", default=4)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
+    # category = models.('Категория', max_length=16, choices=SEASON_CHOICES, default=SEASON_CHOICES[0][0])
+    season = models.CharField('Сезон', max_length=16, choices=SEASON_CHOICES, default=SEASON_CHOICES[0][0], blank=True, null=True)
 
-    def get_attractions(self, limit):
-        return Attraction.objects.all()[:limit]
+    def get_attractions(self, limit, category=None, season=None):
+        qs = Attraction.objects.all()
+        if category:
+            qs = qs.filter(category=category)
+        if season:
+            qs = qs.filter(season=season)
+
+        return qs[:limit]
 
     def generate_id(self):
         return str(uuid.uuid4().fields[-1])[:7]

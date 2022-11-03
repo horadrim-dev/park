@@ -18,10 +18,16 @@ class BackgroundSectionPlugin(CMSPluginBase):
                 'title',
                 'text',
                 'text_bottom',
-                'background_image',
-                'background_color',
                 'css_classes',
                 'use_parallax',
+                'background_color',
+            ]
+        }),
+        ('Фоновое изображение (если ширина и высота равны 0 - будет использоваться оригинальный размер)', {
+            'fields': [
+                ('background_image',
+                'thumb_width',
+                'thumb_height'),
             ]
         }),
         ('Настройки оверлея', {

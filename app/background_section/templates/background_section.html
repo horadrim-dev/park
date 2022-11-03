@@ -1,10 +1,15 @@
-{% load static cms_tags sekizai_tags %}
+{% load static cms_tags sekizai_tags thumbnail %}
 
 {% addtoblock "css" %}
 <style>
   #section-{{id}}{
   {% if background_image %}
-    background-image: url({{background_image.url}});
+    {% if instance.thumb_width and instance.thumb_height %}
+      background-image: url({% thumbnail instance.background_image instance.get_width_height_thumb upscale crop %});
+    {% else %}
+      background-image: url({{ instance.background_image.url }});
+    {% endif %}
+
     {% if instance.use_parallax %}background-attachment: fixed;{% endif %}
   {% else %}
     background-color: {{background_color}};

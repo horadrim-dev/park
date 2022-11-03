@@ -14,8 +14,14 @@ class AttractionPlugin(CMSPluginBase):
     def render(self, context, instance, placeholder):
         context.update({
             'id': instance.generate_id(),
+            'category_id': str(instance.category.id) if instance.category else '',
+            'season': str(instance.season) if instance.season else '',
             'instance': instance,
-            'attraction_list' : instance.get_attractions(limit=instance.num_objects),
+            'attraction_list' : instance.get_attractions(
+                limit=instance.num_objects,
+                category=instance.category,
+                season=instance.season
+                ),
         })
         return context
 
