@@ -14,20 +14,20 @@ class BaseContact(CMSPlugin):
     )
     
     THEME_CHOICES = (
-        ('light', _('Light')),
-        ('dark', _('Dark')),
+        ('clean', 'Clean'),
+        ('red', 'Red'),
+        ('white', 'White'),
+        ('blackglass', 'Black Glass'),
+        ('custom', 'Custom'),
     )
-    SIZE_CHOICES = (
-        ('normal', _('Normal')),
-        ('compact', _('Compact')),
-    )
+
     form_name = models.CharField(_('Form name'),
-                                 blank=True,
-                                 max_length=60,
-                                 help_text=_('Used to distinguish multiple contact forms on the same site.'))
+                                   blank=True,
+                                   max_length=60,
+                                   help_text=_('Used to distinguish multiple contact forms on the same site.'))
     form_layout = models.CharField(_('Form Layout'),
                                    max_length=255,
-                                   help_text=_('Choose the layout of contact form'),
+                                   help_text=_('Choice the layout of contact form'),
                                    choices=settings.CMSPLUGIN_CONTACT_FORMS
                                    )
     site_email = models.EmailField(_('Email recipient'))
@@ -36,8 +36,8 @@ class BaseContact(CMSPlugin):
         verbose_name=_("Thanks message"),
         help_text=_('Message displayed on successful submit'),
         default=_('Thank you for your message.'), max_length=200)
-    submit_text = models.CharField(_('Submit button value'),
-                                   default=_('Submit'), max_length=30)
+    submit = models.CharField(_('Submit button value'),
+                              default=_('Submit'), max_length=30)
     
     spam_protection_method = models.SmallIntegerField(
         verbose_name=_('Spam protection method'),
@@ -49,23 +49,16 @@ class BaseContact(CMSPlugin):
     recaptcha_private_key = models.CharField(max_length=255, blank=True)
     recaptcha_theme = models.CharField(max_length=20,
                                        choices=THEME_CHOICES,
-                                       default='light',
+                                       default='clean',
                                        verbose_name=_('ReCAPTCHA theme'))
-    recaptcha_size = models.CharField(max_length=20,
-                                      choices=SIZE_CHOICES,
-                                      default='normal',
-                                      verbose_name=_('ReCAPTCHA size'))
 
-    redirect_url = models.URLField(_('URL Redirection'),
-                                   help_text=_('If it is set, the form redirect to url '
-                                               'when the form is valid'), blank=True)
+    redirect_url = models.URLField(_('URL Redirection'), help_text=_('If it is set, the form redirect to url when the form is valid'), blank=True)
 
     class Meta:
         abstract = True
     
     def __unicode__(self):
         return self.site_email
-
 
 class Contact(BaseContact):
     pass
