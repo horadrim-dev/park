@@ -10,7 +10,8 @@
     {% for attraction in attraction_list %}
       <div class="col-sm-12 col-lg-6 catalog-item d-flex ftco-animate">
 
-        <div class="img " style="background-image: url({{attraction.main_photo.url}});"></div>
+        {% comment %} <div class="img " style="background-image: url({{attraction.main_photo.url}});"></div> {% endcomment %}
+        <div class="img " style="background-image: url({% thumbnail attraction.main_photo "270x312" upscale crop %});"></div>
 
         <div class="text bg-light p-4">
           <h3><a href="{% url 'attractions:detail' attraction.id %}">{{ attraction.title }}</a></h3>
