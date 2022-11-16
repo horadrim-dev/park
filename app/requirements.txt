@@ -13,9 +13,9 @@ django-filter==22.1
 django-formtools==2.3
 django-js-asset==2.0.0
 django-mptt==0.13.4
-django-nocaptcha-recaptcha==0.0.20
 django-ordered-model==3.6
 django-polymorphic==3.1.0
+django-recaptcha==3.0.0
 django-sekizai==4.0.0
 django-taggit==3.0.0
 django-taggit-templatetags==0.2.5
@@ -47,3 +47,4 @@ svglib==1.4.1
 tinycss2==1.1.1
 Unidecode==1.1.2
 webencodings==0.5.1
+
