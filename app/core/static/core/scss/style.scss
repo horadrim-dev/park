@@ -1597,26 +1597,27 @@ textarea.form-control {
 	}
 	.form-control {
 		border: transparent !important;
-		border-bottom: 1px solid rgba(255,255,255,.2) !important;
+		border-bottom: 1px solid rgba(200, 200, 200, 0.5) !important;
+		// border-bottom: 1px solid rgba(255,255,255,.2) !important;
 		height: 58px!important;
 		padding-left: 0;
 		padding-right: 0; 
 		background: transparent!important;
-		color: rgba(255,255,255,.9)!important;
+		color: inherit !important;
 		font-size: 16px;
 		border-radius: 0px;
 		box-shadow: none!important;
 		&::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-		  color: rgba(255,255,255,.9);
+		  color: inherit;
 		}
 		&::-moz-placeholder { /* Firefox 19+ */
-		  color: rgba(255,255,255,.9);
+		  color: inherit;
 		}
 		&:-ms-input-placeholder { /* IE 10+ */
-		  color: rgba(255,255,255,.9);
+		  color: inherit;
 		}
 		&:-moz-placeholder { /* Firefox 18- */
-		  color: rgba(255,255,255,.9);
+		  color: inherit;
 		}
 		&:focus, &:active {
 			border-color: $white;

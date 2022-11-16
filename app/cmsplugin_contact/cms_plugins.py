@@ -19,7 +19,11 @@ except ImportError:
 
 from .models import Contact
 from .forms import AkismetContactForm, RecaptchaContactForm, HoneyPotContactForm
+# from .forms import AkismetContactForm, HoneyPotContactForm
 from .admin import ContactAdminForm
+
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 email_sent = dispatch.Signal(providing_args=["data", ])
 
@@ -87,7 +91,6 @@ class ContactPlugin(CMSPluginBase):
         return super(ContactPlugin, self).get_form(request, obj, **kwargs)
 
     def create_form(self, instance, request):
-
         ContactFormBase = class_for_path(instance.form_layout)
 
         if instance.get_spam_protection_method_display() == 'Akismet':
@@ -95,21 +98,23 @@ class ContactPlugin(CMSPluginBase):
             class ContactForm(ContactFormBase, AkismetContactForm):
                 pass
             FormClass = ContactForm
-        elif instance.get_spam_protection_method_display() == 'ReCAPTCHA':
-            #if you really want the user to be able to set the key in
-            # every form, this should be more flexible
-            class ContactForm(ContactFormBase, RecaptchaContactForm):
-                recaptcha_public_key = (
-                    instance.recaptcha_public_key or
-                    getattr(settings, "RECAPTCHA_PUBLIC_KEY", None)
-                )
-                recaptcha_private_key = (
-                    instance.recaptcha_private_key or
-                    getattr(settings, "RECAPTCHA_PRIVATE_KEY", None)
-                )
-                recaptcha_theme = instance.recaptcha_theme
 
+        elif instance.get_spam_protection_method_display() == 'ReCAPTCHA V2':
+
+            class ContactForm(ContactFormBase, RecaptchaContactForm):
+                # https://github.com/torchbox/django-recaptcha
+                captcha = ReCaptchaField(
+                                    public_key = instance.recaptcha_public_key or getattr(settings, "RECAPTCHA_PUBLIC_KEY", None),
+                                    private_key = instance.recaptcha_private_key or getattr(settings, "RECAPTCHA_PRIVATE_KEY", None),
+                                    widget=ReCaptchaV2Checkbox(
+                                        attrs={
+                                            'data-theme': 'light',
+                                            'data-size': 'normal',
+                                            }
+                                        )
+                                    )
             FormClass = ContactForm
+
         else:
             class ContactForm(ContactFormBase, HoneyPotContactForm):
                 pass
@@ -120,6 +125,7 @@ class ContactPlugin(CMSPluginBase):
             form = FormClass(request, data=request.POST, files=request.FILES)
         else:
             form = FormClass(request)
+
         form.fields['my_name'] = forms.CharField(max_length=len(instance.form_name),
                                                  widget=forms.HiddenInput,
                                                  label='',
@@ -173,13 +179,12 @@ class ContactPlugin(CMSPluginBase):
                 setattr(request, 'django_cms_contact_redirect_to', HttpResponseRedirect(instance.redirect_url)) 
             context.update({
                 'contact': instance,
-            })        
+            })
         else:
             context.update({
                 'contact': instance,
                 'form': form,
             })
-
         return context
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):

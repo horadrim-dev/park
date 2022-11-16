@@ -10,7 +10,8 @@ class BaseContact(CMSPlugin):
     SPAM_PROTECTION_CHOICES = (
         (0, 'Honeypot'),
         (1, 'Akismet'),
-        (2, 'ReCAPTCHA'),
+        # (2, 'ReCAPTCHA'),
+        (2, 'ReCAPTCHA V2'),
     )
     
     THEME_CHOICES = (

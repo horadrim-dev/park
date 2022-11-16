@@ -57,9 +57,10 @@ class ContactAdminForm(ModelForm):
     def _check_recaptcha(self):
             
         try:
-            from recaptcha.client import captcha as recaptcha
+            # from recaptcha.client import captcha as recaptcha
+            from captcha.fields import ReCaptchaField
         except ImportError:
-            self._add_error('spam_protection_method', _('ReCAPTCHA library is not installed. Use "easy_install recaptcha-client" or "pip install recaptcha-client".'))
+            self._add_error('spam_protection_method', _('ReCAPTCHA library is not installed. Use  "pip install django-recaptcha" (https://github.com/torchbox/django-recaptcha).'))
             
         public_key = getattr(settings, "RECAPTCHA_PUBLIC_KEY", \
                      self.cleaned_data['recaptcha_public_key'])
