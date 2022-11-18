@@ -1,4 +1,4 @@
-{% load i18n static %}
+{% load i18n static sekizai_tags %}
 
 						{% comment %} <div class="heading-section heading-section-white ftco-animate mb-5">
 							<h2 class="mb-4">Request A Quote</h2>
@@ -44,5 +44,46 @@
 	</form>
 
 {% else %}
-	{{ contact.thanks|safe }}
+	{% comment %} {{ contact.thanks|safe }} {% endcomment %}
+	<p><button class="btn btn-success" data-bs-target="#modal-message-sent-{{ contact.id }}" data-bs-toggle="modal" type="button">Сообщение успешно отправлено!</button></p>
+
+	<div aria-hidden="false" aria-labelledby="staticBackdropLabel" class="modal fade in" data-bs-backdrop="static" data-bs-keyboard="false" id="modal-message-sent-{{ contact.id }}" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">Сообщение успешно отправлено</h1>
+					<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
+				<div class="modal-body">
+
+					{{ contact.thanks|safe }}
+
+				</div>
+				<div class="modal-footer justify-content-center">
+					<button type="button" class="btn btn-success" data-bs-dismiss="modal">Хорошо</button>
+				</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	{% addtoblock "js" %}
+	<script>
+	$(window).on('load', function() {
+		$('#modal-message-sent-{{ contact.id }}').modal('show');
+	});
+	</script>
+	{% endaddtoblock %}
+{% comment %} 
+	<div id="bottom-alert" class="alert alert-warning alert-dismissible fade"
+	style="position: fixed; bottom: 15px; left: 0; right: 0; max-width: 360px; margin: 0 auto;">Уведомление внизу
+	экрана!<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+	{% addtoblock "js" %}
+	<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		setTimeout(() => {
+		document.querySelector('#bottom-alert').classList.add('show');
+		}, 1000);
+	});
+	</script>
+	{% endaddtoblock %} {% endcomment %}
 {% endif %}
