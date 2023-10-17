@@ -1,7 +1,7 @@
 import os
 from django import dispatch
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.forms.fields import CharField
 from django import forms
 from django.core.mail import EmailMessage
@@ -25,7 +25,8 @@ from .admin import ContactAdminForm
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 
-email_sent = dispatch.Signal(providing_args=["data", ])
+# email_sent = dispatch.Signal(providing_args=["data", ])
+email_sent = dispatch.Signal("data")
 
 
 class ContactPlugin(CMSPluginBase):

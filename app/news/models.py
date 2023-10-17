@@ -3,17 +3,52 @@ from django.db import models
 from filer.fields.image import FilerImageField
 from djangocms_text_ckeditor.fields import HTMLField
 from django.urls import reverse
+from filer.fields.file import FilerFileField, File
 from cms.models.pluginmodel import CMSPlugin
 from cms.models.fields import PlaceholderField
 import uuid
 import datetime
 from core.utils import slugify_rus
 import locale
+from django.dispatch import receiver
+import os
+
 
 class ContentManager(models.Manager):
 
     def published(self):
         return self.filter(published=True, published_at__lte=datetime.date.today())
+
+class ImagePost(models.Model):
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    image = FilerImageField(verbose_name="Изображение", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "изображение"
+        verbose_name_plural = "изображения"
+
+
+@receiver(models.signals.post_delete, sender=ImagePost)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Удаляет файл при удалении объекта
+    """
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            # delete file from file system
+            os.remove(instance.image.path)
+            # delete Filer File object
+            File.objects.filter(id=instance.image_id).delete()
+
+class VideoPost(models.Model):
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    video_url = models.CharField("Ссылка на видео", null=True, blank=True, max_length=512,
+                             help_text="Как правило содержится в атрибуте 'src'\
+                                         тега 'iframe' экспортируемого видео.")
+
+    class Meta:
+        verbose_name = "видео"
+        verbose_name_plural = "видео"
 
 class Post(models.Model):
     title = models.CharField(
@@ -28,16 +63,16 @@ class Post(models.Model):
 
     text = HTMLField("Содержимое", default="", blank=True, null=True)
 
-    image = FilerImageField(verbose_name="Изображение", on_delete=models.CASCADE)
+    # image = FilerImageField(verbose_name="Изображение", on_delete=models.CASCADE)
 
-    IMAGE_POSITION_CHOICES = [
-        ('left', 'Слева'),
-        ('stretch', 'Растянуть'),
-        ('right', 'Справа'),
-        ('hide', 'Скрыть'),
-    ]
-    image_position = models.CharField(max_length=64, choices=IMAGE_POSITION_CHOICES, default=IMAGE_POSITION_CHOICES[0][0],
-        verbose_name="Расположение изображения")
+    # IMAGE_POSITION_CHOICES = [
+    #     ('left', 'Слева'),
+    #     ('stretch', 'Растянуть'),
+    #     ('right', 'Справа'),
+    #     ('hide', 'Скрыть'),
+    # ]
+    # image_position = models.CharField(max_length=64, choices=IMAGE_POSITION_CHOICES, default=IMAGE_POSITION_CHOICES[0][0],
+    #     verbose_name="Расположение изображения")
 
     placeholder_top = PlaceholderField('top', related_name="post_top")
     placeholder_bottom = PlaceholderField('bottom', related_name="post_bottom")
@@ -47,6 +82,10 @@ class Post(models.Model):
     @property
     def gen_id(self):
         return str(uuid.uuid4().fields[-1])[:7]
+
+    @property
+    def cover(self):
+        return self.imagepost_set.first()
 
     def get_absolute_url(self):
         return reverse("news:detail", kwargs={"slug": self.alias})

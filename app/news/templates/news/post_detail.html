@@ -3,53 +3,96 @@
 
 {% block app_content %}
 
+  {% addtoblock "css" %}
+  <link type="text/css" rel="stylesheet" href="{% static 'attractions/css/lightgallery.min.css'%}" />
+  {% endaddtoblock %}
+  {% addtoblock "css" %}
+  <link type="text/css" rel="stylesheet" href="{% static 'attractions/css/lg-transitions.min.css'%}" />
+  {% endaddtoblock %}
+  {% addtoblock "css" %}
+  <link type="text/css" rel="stylesheet" href="{% static 'attractions/css/lg-fb-comment-box.min.css'%}" />
+  {% endaddtoblock %}
+  {% addtoblock "js" %}
+  <script defer type="text/javascript" src="{% static 'attractions/js/lightgallery.min.js' %}"></script>
+  {% endaddtoblock %}
+  {% addtoblock "js" %}
+  <script defer type="text/javascript" src="{% static 'attractions/js/lg-thumbnail.min.js' %}"></script>
+  {% endaddtoblock %}
+
+
   <div class="row">
 
     <div class="col ftco-animate">
 
       {% render_model_block object %}
 
-        <h2 class="mb-3">{{ object.title }}</h2>
+        {% if main_image or main_video %}
 
-        {% if object.image and not object.image_position == 'hide' %}
-        <div class="object-image 
-                {% if object.image_position == 'left'%}
-                w-50 float-start me-3 mb-3
-                {% elif object.image_position == 'right'%}
-                w-50 float-end ms-3 mb-3
-                {% elif object.image_position == 'stretch' %}
-                w-100 mb-3
+          <div class="row">
+            <div class="col text-center">
+              {% if main_image %}
+                {% spaceless %}
+                <div id="gallery-{{object.id}}" class="light-gallery-plugin img w-100">
+                    <a href="{{ main_image.image.url }}" class="d-block w-100">
+                        <img class="img-fluid" src="{% thumbnail main_image.image "585x500" upscale autocrop %}" >
+                    </a>
+
+                    {% if images %}
+                      {% for image in images %}
+                          <a href="{{ image.image.url }}">
+                              <img src="{% thumbnail image.image "280x280" upscale crop %}" style="margin:5px;" />
+                          </a>
+                      {% endfor %}
+                    {% endif %}
+                </div>
+                {% endspaceless %}
+
+                {% addtoblock "js" %}
+                <script type="text/javascript">
+                window.addEventListener('load', function() {
+                    $("#gallery-{{object.id}}").lightGallery({
+                    mode: "lg-slide",
+                    speed: 500,
+                    })//;
+                });
+                </script>
+                {% endaddtoblock %}
+
+              {% endif %}
+
+              {% if main_video %}
+                <iframe src="{{ main_video.video_url }}"  
+                    width="100%"
+                    height="280"
+                    frameborder="0" allowfullscreen="true"
+                ></iframe>
+                {% if videos %}
+                  {% for video in videos %}
+                    <iframe src="{{ video.video_url }}"  
+                        width="280"
+                        height="280"
+                        frameborder="0" allowfullscreen="true"
+                    ></iframe>
+                  {% endfor %}
                 {% endif %}
-            " 
-            style="height:200px;">
-            <img src="{{object.image.url}}" alt="{{object.title}}" class="img-fluid w-100 h-100" style="object-fit:cover;" >
-        </div>
+              {% endif %}
+            </div>
+            <div class="col">
+              {{ object.text | safe }}
+            </div>
+          </div>
+
+
+
+        {% else %}
+        
+          {{ object.text | safe }}
+
         {% endif %}
 
-        {{ object.text | safe }}
 
       {% endrender_model_block %}
-      {% comment %} <div class="tag-widget object-tag-container mb-5 mt-5">
-        <div class="tagcloud">
-          <a href="#" class="tag-cloud-link">Life</a>
-          <a href="#" class="tag-cloud-link">Sport</a>
-          <a href="#" class="tag-cloud-link">Tech</a>
-          <a href="#" class="tag-cloud-link">Travel</a>
-        </div>
-      </div>
-
-      <div class="about-author d-flex p-4 bg-light">
-        <div class="bio mr-5">
-          <img src="{% static 'core/images/teacher-1.jpg' %}" alt="Image placeholder" class="img-fluid mb-4">
-        </div>
-        <div class="desc">
-          <h3>George Washington</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
-        </div>
-      </div>
-    </div> {% endcomment %}
 
   </div>
-
 
 {% endblock %}
