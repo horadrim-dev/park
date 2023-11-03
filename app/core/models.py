@@ -1,4 +1,5 @@
 from django.db import models, transaction
+from cms.models.pluginmodel import CMSPlugin
 
 class OrderedModel(models.Model):
     
@@ -37,3 +38,14 @@ class OrderedModel(models.Model):
     class Meta:
         abstract = True
         ordering = ['order']
+
+
+class PureCodePlugin(CMSPlugin):
+    """Модель плагина позволяющего ввети пользовательский код"""
+    # css = models.Text
+    code = models.TextField("HTML", blank=True, null=True,
+                            help_text="Использовать js и css здесь возможно, но не рекомендуется.")
+    css = models.TextField("CSS", blank=True, null=True,)
+    js = models.TextField("JAVASCRIPT", blank=True, null=True,
+                          help_text="Доступно использование jQuery, пример \"$(document).ready(function () { \
+                          alert(\"test\");});\"")
